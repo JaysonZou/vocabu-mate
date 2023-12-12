@@ -1,41 +1,27 @@
-import { DisaplayWord } from "./DisplayWord/page";
+import { DisaplayWord, WordData } from "./DisplayWord/page";
+import { fetchRedis } from "@/helpers/redis";
 
-export default function Home() {
-  const data = {
-    word: "Hello",
-    sentence: "Say hello to you",
-    comment: "你好",
-  };
-  const words = [
-    {
-      word: "Hello",
-      sentence: "Say hello to you",
-      comment: "你好",
-    },
-    {
-      word: "Bees",
-      sentence: "Say Bees to you",
-      comment: "蜜蜂",
-    },
-    {
-      word: "transaction",
-      sentence: "Say Bees to you",
-      comment: "事物",
-    },
-  ];
+export default async function Home() {
+  // const words = await fetchRedis("hget", "word");
+  const words: WordData[] = require("../../public/fake.json");
+
   return (
     <main className="h-screen flex justify-center bg-white">
-      {/* <div className="h-full carousel carousel-vertical rounded-boxx">
-        {words.map((word, index) => (
-          <div
-            key={word.word}
-            id={word.word + index}
-            className="carousel-item h-full"
-          >
-            <DisaplayWord wordData={word} />
-          </div>
-        ))}
-      </div> */}
+      <div className="h-full carousel carousel-vertical rounded-boxx">
+        {words ? (
+          words.map((word, index) => (
+            <div
+              key={word.word}
+              id={word.word + index}
+              className="carousel-item h-full"
+            >
+              <DisaplayWord wordData={word} />
+            </div>
+          ))
+        ) : (
+          <div>EMPTY</div>
+        )}
+      </div>
     </main>
   );
 }

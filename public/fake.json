@@ -1,0 +1,82 @@
+[
+  {
+    "word": "apple",
+    "comment": "A delicious fruit.",
+    "sentence": "I ate an apple for breakfast."
+  },
+  {
+    "word": "book",
+    "comment": "A written or printed work consisting of pages glued or sewn together along one side and bound in covers.",
+    "sentence": "She enjoys reading a good book before bedtime."
+  },
+  {
+    "word": "cat",
+    "comment": "A small domesticated carnivorous mammal.",
+    "sentence": "The cat climbed up the tree."
+  },
+  {
+    "word": "dog",
+    "comment": "A domesticated carnivorous mammal that typically has a long snout, an acute sense of smell, and a barking, howling, or whining voice.",
+    "sentence": "She took her dog for a walk in the park."
+  },
+  {
+    "word": "elephant",
+    "comment": "A very large plant-eating mammal with a prehensile trunk, long curved ivory tusks, and large ears.",
+    "sentence": "We went on a safari and saw elephants in the wild."
+  },
+  {
+    "word": "flower",
+    "comment": "The seed-bearing part of a plant, consisting of reproductive organs surrounded by colorful petals and modified leaves.",
+    "sentence": "He gave her a bouquet of beautiful flowers."
+  },
+  {
+    "word": "guitar",
+    "comment": "A stringed musical instrument played with the fingers or a plectrum, typically having six strings.",
+    "sentence": "He strummed the guitar and sang a song."
+  },
+  {
+    "word": "house",
+    "comment": "A building for human habitation, especially one that is lived in by a family or small group of people.",
+    "sentence": "They moved into a new house last month."
+  },
+  {
+    "word": "island",
+    "comment": "A piece of land surrounded by water.",
+    "sentence": "They went on a vacation to a tropical island."
+  },
+  {
+    "word": "jungle",
+    "comment": "A dense forest in a tropical or subtropical region with a large amount of vegetation.",
+    "sentence": "They explored the dense jungle and discovered new species of plants."
+  },
+  {
+    "word": "kangaroo",
+    "comment": "A large herbivorous marsupial with a long powerful tail and strongly developed hindlimbs that enable it to travel by leaping.",
+    "sentence": "Kangaroos are native to Australia."
+  },
+  {
+    "word": "laptop",
+    "comment": "A portable computer that is small and light enough to be used on one's lap.",
+    "sentence": "She brought her laptop to the coffee shop to work."
+  },
+  {
+    "word": "mountain",
+    "comment": "A large natural elevation of the earth's surface rising abruptly from the surrounding level; a large steep hill.",
+    "sentence": "They hiked to the summit of the mountain."
+  },
+  {
+    "word": "ocean",
+    "comment": "A very large expanse of sea, in particular, each of the main areas into which the sea is divided geographically.",
+    "sentence": "The ship sailed across the ocean."
+  },
+  {
+    "word": "pizza",
+    "comment": "A dish consisting of a flat round base of dough baked with a topping of tomato sauce and cheese, typically with added meat or vegetables.",
+    "sentence": "They ordered a large pizza for dinner."
+  },
+  {
+    "word": "queen",
+    "comment": "The female ruler of an independent state, especially one who inherits the position by right of birth.",
+    "sentence": "The queen waved to the crowd from her carriage."
+  }
+]
