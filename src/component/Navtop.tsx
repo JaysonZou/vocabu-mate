@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Navtop = () => {
   return (
-    <div className="navbar bg-base-100 border-b">
+    <div className="navbar bg-base-100 border-b sticky top-0 left-0">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
@@ -31,7 +31,7 @@ const Navtop = () => {
               <Link href="/WordList">Words</Link>
             </li>
             <li>
-              <Link href="/">Memorize</Link>
+              <Link href="/Memorize">Memorize</Link>
             </li>
             <li>
               <a>Flags</a>

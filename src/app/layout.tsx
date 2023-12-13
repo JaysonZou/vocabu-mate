@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import AddNewWord from "@/component/AddNewWord";
 import Navtop from "@/component/Navtop";
+import Providers from "@/component/Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,25 +20,27 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="drawer drawer-end">
-          <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-          <div className="drawer-content">
-            {/* Page content here */}
-            <Navtop />
-            {children}
-          </div>
-          <div className="drawer-side">
-            <label
-              htmlFor="my-drawer"
-              aria-label="close sidebar"
-              className="drawer-overlay"
-            ></label>
-            <div className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-              {/* Sidebar content here */}
-              <AddNewWord />
+        <Providers>
+          <div className="drawer drawer-end">
+            <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content">
+              {/* Page content here */}
+              <Navtop />
+              {children}
+            </div>
+            <div className="drawer-side">
+              <label
+                htmlFor="my-drawer"
+                aria-label="close sidebar"
+                className="drawer-overlay"
+              ></label>
+              <div className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+                {/* Sidebar content here */}
+                <AddNewWord />
+              </div>
             </div>
           </div>
-        </div>
+        </Providers>
       </body>
     </html>
   );

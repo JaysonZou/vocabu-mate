@@ -26,7 +26,9 @@ export async function POST(req: Request) {
     //   return new Response("Already added this user", { status: 400 });
     // }
 
-    await db.hset(`word${word}`, body);
+    await db.hset(`word`, {
+      [`${word}`]: body,
+    });
 
     return new Response("OK");
   } catch (error) {

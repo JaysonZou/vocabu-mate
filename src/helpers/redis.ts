@@ -1,7 +1,7 @@
 const upstashRedisRestUrl = process.env.UPSTASH_REDIS_REST_URL;
 const authToken = process.env.UPSTASH_REDIS_REST_TOKEN;
 
-type Command = "hget" | "zrange" | "sismember" | "get" | "smembers";
+type Command = "hgetall" | "hget" | "zrange" | "sismember" | "get" | "smembers";
 
 export async function fetchRedis(
   command: Command,
@@ -21,5 +21,7 @@ export async function fetchRedis(
   }
 
   const data = await response.json();
+  console.log(data);
+
   return data.result;
 }

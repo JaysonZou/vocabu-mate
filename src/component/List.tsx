@@ -1,44 +1,23 @@
 "use client";
 
-import { HTMLAttributes } from "react";
-import { WordData } from "../app/DisplayWord/page";
+import { Flag } from "lucide-react";
+import { WordData } from "./DisplayedWord";
 
 interface ListProps {
   listData: WordData[];
 }
-export const aList: React.FC<ListProps> = ({ listData }) => {
-  return (
-    <div className="flex flex-col">
-      {listData.map((item, index) => {
-        return <ListCard key={index} wordData={item} className="join-item" />;
-      })}
-    </div>
-  );
-};
-
-interface ListCardProps extends HTMLAttributes<HTMLDivElement> {
-  wordData: WordData;
-}
-export const ListCard: React.FC<ListCardProps> = ({ wordData }) => {
-  return (
-    <div className="rounded-md w-full mb-4 py-2 px-4 border-b">
-      <h2 className="card-title">{wordData.word}</h2>
-      <p>{wordData.sentence}</p>
-      <p>{wordData.comment}</p>
-    </div>
-  );
-};
 
 export const List: React.FC<ListProps> = ({ listData }) => {
   return (
     <div className="overflow-x-auto">
-      <table className="table">
+      <table className="table h-fit">
         {/* head */}
         <thead>
           <tr className="text-sm">
-            <th>Word</th>
-            <th>comment</th>
-            <th>Sentence</th>
+            <th>
+              <span>Filter by flags</span>
+              <ChooseFlag />
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -48,23 +27,48 @@ export const List: React.FC<ListProps> = ({ listData }) => {
                 <td>
                   <div className="flex items-center gap-3">
                     <div>
-                      <div className="font-bold font-serif text-sm">
+                      <div className="font-bold text-lg mb-3 flex align-middle items-center gap-10">
                         {item.word}
+                        <ChooseFlag />
                       </div>
+                      <div className="text-sm opacity-50">{item.sentence}</div>
+                      <div>{item.comment}</div>
                     </div>
                   </div>
                 </td>
-                <td>
-                  <span className="badge badge-ghost badge-lg font-serif">
-                    {item.comment}
-                  </span>
-                </td>
-                <td className="font-serif">{item.sentence}</td>
               </tr>
             );
           })}
         </tbody>
       </table>
+    </div>
+  );
+};
+
+const ChooseFlag = ({ currentColor = "" }) => {
+  const colors = ["red", "green", "orange", "pink"];
+  return (
+    <div className="dropdown ml-10">
+      <div tabIndex={0} role="button">
+        {currentColor ? (
+          <Flag size={16} color={currentColor} fill={currentColor} />
+        ) : (
+          <Flag size={16} />
+        )}
+      </div>
+
+      <ul
+        tabIndex={0}
+        className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+      >
+        {colors.map((color) => (
+          <li key={color}>
+            <a>
+              <Flag size={16} color={color} fill={color} />
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
