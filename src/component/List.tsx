@@ -45,7 +45,7 @@ export const List: React.FC<ListProps> = ({ listData }) => {
   );
 };
 
-const ChooseFlag = ({ currentColor = "" }) => {
+export const ChooseFlag = ({ currentColor = "" }) => {
   const colors = ["red", "green", "orange", "pink"];
   return (
     <div className="dropdown ml-10">
