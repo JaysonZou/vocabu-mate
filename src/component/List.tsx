@@ -1,6 +1,6 @@
 "use client";
 
-import { Flag } from "lucide-react";
+import { Delete, Flag } from "lucide-react";
 import { WordData } from "./DisplayedWord";
 
 interface ListProps {
@@ -8,6 +8,15 @@ interface ListProps {
 }
 
 export const List: React.FC<ListProps> = ({ listData }) => {
+  const handleDel = (word: string) => {
+    const result = fetch("/api/word/delete", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ word }),
+    });
+  };
   return (
     <div className="overflow-x-auto">
       <table className="table h-fit">
@@ -30,6 +39,12 @@ export const List: React.FC<ListProps> = ({ listData }) => {
                       <div className="font-bold text-lg mb-3 flex align-middle items-center gap-10">
                         {item.word}
                         <ChooseFlag />
+                        <button
+                          className="btn"
+                          onClick={() => handleDel(item.word)}
+                        >
+                          <Delete />
+                        </button>
                       </div>
                       <div className="text-sm opacity-50">{item.sentence}</div>
                       <div>{item.comment}</div>
