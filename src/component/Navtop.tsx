@@ -31,7 +31,7 @@ const Navtop = () => {
               <Link href="/WordList">Words</Link>
             </li>
             <li>
-              <Link href="/memorize">Memorize</Link>
+              <Link href="/singleReview">SingleReview</Link>
             </li>
             <li>
               <Link href="/memorandum">Memo</Link>

@@ -1,7 +1,12 @@
 "use client";
 
-import { Delete, Flag } from "lucide-react";
+import { Delete, Flag, Trash2 } from "lucide-react";
 import { WordData } from "./DisplayedWord";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
 
 interface ListProps {
   listData: WordData[];
@@ -18,7 +23,7 @@ export const List: React.FC<ListProps> = ({ listData }) => {
     });
   };
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto w-3/5">
       <table className="table h-fit">
         {/* head */}
         <thead>
@@ -36,15 +41,27 @@ export const List: React.FC<ListProps> = ({ listData }) => {
                 <td>
                   <div className="flex items-center gap-3">
                     <div>
-                      <div className="font-bold text-lg mb-3 flex align-middle items-center gap-10">
+                      <div className="font-bold text-lg mb-3 flex justify-start items-center gap-4">
                         {item.word}
                         <ChooseFlag />
-                        <button
-                          className="btn"
-                          onClick={() => handleDel(item.word)}
-                        >
-                          <Delete />
-                        </button>
+                        <Popover>
+                          <PopoverTrigger>
+                            <Trash2 size={16} />
+                          </PopoverTrigger>
+                          <PopoverContent>
+                            delete this word?
+                            <br />
+                            <button className="btn btn-outline btn-xs">
+                              cancel
+                            </button>
+                            <button
+                              className="btn btn-neutral btn-xs"
+                              onClick={() => handleDel(item.word)}
+                            >
+                              ok
+                            </button>
+                          </PopoverContent>
+                        </Popover>
                       </div>
                       <div className="text-sm opacity-50">{item.sentence}</div>
                       <div>{item.comment}</div>
@@ -63,27 +80,18 @@ export const List: React.FC<ListProps> = ({ listData }) => {
 export const ChooseFlag = ({ currentColor = "" }) => {
   const colors = ["red", "green", "orange", "pink"];
   return (
-    <div className="dropdown ml-10">
-      <div tabIndex={0} role="button">
-        {currentColor ? (
-          <Flag size={16} color={currentColor} fill={currentColor} />
-        ) : (
-          <Flag size={16} />
-        )}
-      </div>
-
-      <ul
-        tabIndex={0}
-        className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-      >
-        {colors.map((color) => (
-          <li key={color}>
-            <a>
-              <Flag size={16} color={color} fill={color} />
-            </a>
-          </li>
+    <Popover>
+      <PopoverTrigger>
+        <Flag size={16} />
+      </PopoverTrigger>
+      <PopoverContent className="w-auto flex flex-col gap-2 p-1">
+        {colors.map((c) => (
+          <button key={c} className="btn btn-ghost btn-xs">
+            <Flag size={16} color={c} fill={c} />
+            {""}
+          </button>
         ))}
-      </ul>
-    </div>
+      </PopoverContent>
+    </Popover>
   );
 };
