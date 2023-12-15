@@ -21,7 +21,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [wordsList, setWordsList] = useState([]);
+  const [wordsList, setWordsList] = useState<WordData[]>([]);
   return (
     <html lang="en">
       <body className={inter.className}>
