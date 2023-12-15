@@ -1,10 +1,4 @@
-import { Metadata } from "next";
 import Link from "next/link";
-
-export const metadata: Metadata = {
-  title: "VocabuMate",
-  description: "Manage your words easily",
-};
 
 export default async function Home() {
   return (

@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/popover";
 import { toast } from "react-hot-toast";
 import { useContext, useEffect, useState } from "react";
-import { DataContext } from "@/app/layout";
+import { DataContext } from "@/component/Providers";
 
 interface ListProps {
   listData: WordData[];
