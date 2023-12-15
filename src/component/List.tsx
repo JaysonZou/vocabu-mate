@@ -7,20 +7,36 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover";
+import { toast } from "react-hot-toast";
+import { useContext, useEffect, useState } from "react";
+import { DataContext } from "@/app/layout";
 
 interface ListProps {
   listData: WordData[];
 }
 
 export const List: React.FC<ListProps> = ({ listData }) => {
-  const handleDel = (word: string) => {
-    const result = fetch("/api/word/delete", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ word }),
-    });
+  // const [wordsList, setWordsList] = useState(listData);
+  const { wordsList, setWordsList } = useContext(DataContext);
+
+  useEffect(() => {
+    setWordsList(listData);
+  }, [listData, setWordsList]);
+
+  const handleDel = async (word: string) => {
+    try {
+      await fetch("/api/word/delete", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ word }),
+      });
+      setWordsList((prev) => prev.filter((w) => w.word !== word));
+      toast.success("Successfully delete");
+    } catch (error) {
+      toast.error("Something went wrong. Please try later.");
+    }
   };
   return (
     <div className="overflow-x-auto w-3/5">
@@ -35,7 +51,7 @@ export const List: React.FC<ListProps> = ({ listData }) => {
           </tr>
         </thead>
         <tbody>
-          {listData.map((item) => {
+          {wordsList.map((item) => {
             return (
               <tr key={item.word}>
                 <td>
@@ -48,23 +64,32 @@ export const List: React.FC<ListProps> = ({ listData }) => {
                           <PopoverTrigger>
                             <Trash2 size={16} />
                           </PopoverTrigger>
-                          <PopoverContent>
-                            delete this word?
-                            <br />
-                            <button className="btn btn-outline btn-xs">
-                              cancel
-                            </button>
-                            <button
-                              className="btn btn-neutral btn-xs"
-                              onClick={() => handleDel(item.word)}
-                            >
-                              ok
-                            </button>
+                          <PopoverContent className="w-auto">
+                            <div className="text-center mb-3">
+                              Delete the word{" "}
+                              <span className="badge badge-warning">
+                                {item.word}
+                              </span>
+                              ?
+                            </div>
+                            <div className="flex justify-end gap-2">
+                              <button className="btn btn-outline btn-xs">
+                                cancel
+                              </button>
+                              <button
+                                className="btn btn-neutral btn-xs"
+                                onClick={() => handleDel(item.word)}
+                              >
+                                ok
+                              </button>
+                            </div>
                           </PopoverContent>
                         </Popover>
                       </div>
-                      <div className="text-sm opacity-50">{item.sentence}</div>
-                      <div>{item.comment}</div>
+                      <div className="text-sm opacity-50 mb-2">
+                        {item.comment}
+                      </div>
+                      <div>{item.sentence}</div>
                     </div>
                   </div>
                 </td>

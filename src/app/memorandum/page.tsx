@@ -1,10 +1,5 @@
 "use client";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+
 import { useState } from "react";
 
 export default function Page() {
@@ -44,16 +39,15 @@ export default function Page() {
   };
   return (
     <div className="flex flex-col w-1/5 m-auto mt-10">
-      <Accordion type="single" collapsible>
+      <ul className="list-disc">
         {memos.map((m) => (
-          <AccordionItem value={`item-${m.name}`} key={m.name}>
-            <AccordionTrigger>{m.name}</AccordionTrigger>
-            <AccordionContent>
-              Yes. It adheres to the WAI-ARIA design pattern.
-            </AccordionContent>
-          </AccordionItem>
+          <li value={`item-${m.name}`} key={m.name}>
+            {m.name}
+            <br />
+            {m.desc}
+          </li>
         ))}
-      </Accordion>
+      </ul>
       <button className="btn btn-outline mt-20">Add</button>
     </div>
   );
