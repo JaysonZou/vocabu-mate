@@ -39,7 +39,7 @@ export const List: React.FC<ListProps> = ({ listData }) => {
     }
   };
   return (
-    <div className="overflow-x-auto w-3/5">
+    <div className="overflow-x-auto w-1/2">
       <table className="table h-fit">
         {/* head */}
         <thead>

@@ -7,7 +7,7 @@ export default async function pageMemo() {
     .filter((w: any) => w.startsWith("{"))
     .map((w: any) => JSON.parse(w));
   return (
-    <div className="h-full carousel carousel-vertical rounded-boxx">
+    <div className="h-full carousel carousel-vertical rounded-boxx items-center">
       {words ? (
         words.map((word, index) => (
           <div

@@ -14,7 +14,7 @@ import AddNewWord from "./AddNewWord";
 const Navtop = () => {
   return (
     <Sheet>
-      <div className="navbar bg-base-100 border-b">
+      <div className="sticky left-0 top-0 navbar bg-base-100 border-b">
         <div className="navbar-start">
           <div className="dropdown">
             <div
@@ -45,10 +45,10 @@ const Navtop = () => {
                 <Link href="/WordList">Words</Link>
               </li>
               <li>
-                <Link href="/singleReview">SingleReview</Link>
+                <Link href="/review">Review</Link>
               </li>
               <li>
-                <Link href="/memorandum">Memo</Link>
+                <Link href="/notes">Notes</Link>
               </li>
             </ul>
           </div>

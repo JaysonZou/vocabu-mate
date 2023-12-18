@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={(inter.className, "h-screen pb-16")}>
         <Providers>
           <Navtop />
           {children}
