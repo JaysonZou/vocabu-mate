@@ -14,7 +14,7 @@ import AddNewWord from "./AddNewWord";
 const Navtop = () => {
   return (
     <Sheet>
-      <div className="sticky left-0 top-0 navbar bg-base-100 border-b">
+      <div className="sticky left-0 top-0 navbar">
         <div className="navbar-start">
           <div className="dropdown">
             <div
@@ -57,7 +57,7 @@ const Navtop = () => {
           <SheetTrigger>Open</SheetTrigger>
         </div>
 
-        <SheetContent>
+        <SheetContent side={"top"}>
           <SheetHeader>
             <SheetTitle>Gather a new word</SheetTitle>
             <SheetDescription>

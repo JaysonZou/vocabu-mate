@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import { DataContext } from "../component/Providers";
 import { useContext } from "react";
 import toast from "react-hot-toast";
+import { Button } from "@/components/ui/button";
 
 const AddNewWord = () => {
   const { wordsList, setWordsList } = useContext(DataContext);
@@ -32,7 +33,7 @@ const AddNewWord = () => {
     <form onSubmit={formik.handleSubmit}>
       <div className="grid gap-4 py-4">
         <div className="grid grid-cols-4 items-center gap-4">
-          <label htmlFor="word" className="text-right text-sm font-bold">
+          <label htmlFor="word" className="text-right text-sm font-medium">
             Word
           </label>
           <input
@@ -46,7 +47,7 @@ const AddNewWord = () => {
         <div className="grid grid-cols-4 items-center gap-4">
           <label
             htmlFor="comment"
-            className="self-start text-right text-sm font-bold"
+            className="self-start text-right text-sm font-medium"
           >
             Comment
           </label>
@@ -61,7 +62,7 @@ const AddNewWord = () => {
         <div className="grid grid-cols-4 items-center gap-4">
           <label
             htmlFor="sentence"
-            className="self-start text-right text-sm font-bold"
+            className="self-start text-right text-sm font-medium"
           >
             Sentence
           </label>
@@ -76,13 +77,9 @@ const AddNewWord = () => {
       </div>
       <SheetFooter>
         <SheetClose asChild>
-          <button
-            type="submit"
-            className="btn btn-neutral btn-sm"
-            disabled={formik.isSubmitting}
-          >
-            Save
-          </button>
+          <Button type="submit" disabled={formik.isSubmitting}>
+            Save Word
+          </Button>
         </SheetClose>
       </SheetFooter>
     </form>
