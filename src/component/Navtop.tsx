@@ -1,6 +1,8 @@
 "use client";
 import { PlusSquare } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+
 import {
   Sheet,
   SheetContent,
@@ -14,8 +16,10 @@ import AddNewWord from "./AddNewWord";
 const Navtop = () => {
   return (
     <Sheet>
-      <div className="sticky left-0 top-0 navbar border-b">
+      <div className="sticky left-0 top-0 navbar border-b px-44">
         <div className="navbar-start">
+          <Image src="/logo.png" alt="logo" width={20} height={20} />
+          <div className="ml-2">VocabuMate</div>
           <div className="dropdown">
             <div
               tabIndex={0}
