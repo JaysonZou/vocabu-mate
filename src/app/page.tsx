@@ -24,7 +24,7 @@ export default async function Home() {
         </div>
       </main>
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 justify-center">
-        <p className="text-xs text-gray-500 dark:text-gray-400">
+        <p className="text-xs text-gray-500 dark:text-gray-400 font-serif">
           Copyright © 2014-2023 Jayson Zou
         </p>
       </footer>

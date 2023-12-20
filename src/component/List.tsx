@@ -39,8 +39,8 @@ export const List: React.FC<ListProps> = ({ listData }) => {
     }
   };
   return (
-    <div className="overflow-x-auto w-1/2">
-      <table className="table h-fit">
+    <div className="overflow-x-auto w-1/2 h-full">
+      <table className="table table-pin-rows">
         {/* head */}
         <thead>
           <tr className="text-sm">

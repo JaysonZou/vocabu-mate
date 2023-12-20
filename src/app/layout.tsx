@@ -18,10 +18,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={(inter.className, "h-screen pb-16")}>
+      <body className={(inter.className, "h-screen")}>
         <Providers>
           <Navtop />
-          {children}
+          <div className="body-content">{children}</div>
         </Providers>
       </body>
     </html>
