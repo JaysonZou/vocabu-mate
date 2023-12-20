@@ -14,7 +14,7 @@ import AddNewWord from "./AddNewWord";
 const Navtop = () => {
   return (
     <Sheet>
-      <div className="sticky left-0 top-0 navbar">
+      <div className="sticky left-0 top-0 navbar border-b">
         <div className="navbar-start">
           <div className="dropdown">
             <div

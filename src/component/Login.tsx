@@ -4,8 +4,10 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useFormik } from "formik";
 import { toast } from "react-hot-toast";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
-const Page = () => {
+const Login = () => {
   const formik = useFormik({
     initialValues: {
       word: "",
@@ -28,7 +30,7 @@ const Page = () => {
   };
 
   return (
-    <div className="mx-auto flex w-full mt-32 flex-col justify-center space-y-6 sm:w-[350px]">
+    <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
       <div className="flex flex-col space-y-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">
           Create an account
@@ -44,16 +46,13 @@ const Page = () => {
           </label>
 
           <div className="mt-6 flex flex-col gap-4">
-            <input
+            <Input
               type="email"
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               placeholder="you@example.com"
               onChange={formik.handleChange}
               value={formik.values.comment}
             />
-            <button className="btn" type={"submit"}>
-              Sign In with Email
-            </button>
+            <Button type={"submit"}>Sign In with Email</Button>
           </div>
         </form>
       </div>
@@ -68,13 +67,13 @@ const Page = () => {
         </div>
       </div>
 
-      <button
+      <Button
         onClick={loginWithGoogle}
-        className="btn flex justify-center align-middle gap-3 items-center h-10"
+        className="flex justify-center align-middle gap-3 items-center h-10"
       >
         <Icons.Google />
         Google
-      </button>
+      </Button>
       <p className="px-8 text-center text-sm text-gray-500">
         By clicking continue, you agree to our{" "}
         <Link
@@ -96,4 +95,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Login;
