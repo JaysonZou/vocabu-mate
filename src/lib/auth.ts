@@ -25,6 +25,9 @@ function getGoogleCredentials() {
 
 export const authOptions: NextAuthOptions = {
   adapter: UpstashRedisAdapter(db),
+  pages: {
+    signIn: "/",
+  },
   session: {
     strategy: "jwt",
   },
@@ -33,22 +36,24 @@ export const authOptions: NextAuthOptions = {
       clientId: getGoogleCredentials().clientId,
       clientSecret: getGoogleCredentials().clientSecret,
     }),
-    EmailProvider({
-      from: process.env.SMTP_FROM,
-      sendVerificationRequest: async ({ identifier, url, provider }) => {
-        // const user = await db.user.findUnique({
-        //   where: {
-        //     email: identifier,
-        //   },
-        //   select: {
-        //     emailVerified: true,
-        //   },
-        // });
-      },
-    }),
+    // EmailProvider({
+    //   from: process.env.SMTP_FROM,
+    //   sendVerificationRequest: async ({ identifier, url, provider }) => {
+    //     // const user = await db.user.findUnique({
+    //     //   where: {
+    //     //     email: identifier,
+    //     //   },
+    //     //   select: {
+    //     //     emailVerified: true,
+    //     //   },
+    //     // });
+    //   },
+    // }),
   ],
   callbacks: {
     async jwt({ token, user }) {
+      console.log("jwt");
+
       const dbUserResult = (await fetchRedis("get", `user:${token.id}`)) as
         | string
         | null;
@@ -70,6 +75,8 @@ export const authOptions: NextAuthOptions = {
       };
     },
     async session({ token, session }) {
+      console.log("session");
+
       if (token) {
         session.user.id = token.id;
         session.user.name = token.name;
@@ -80,7 +87,7 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     redirect() {
-      return "/words";
+      return "/mywords";
     },
   },
 };
