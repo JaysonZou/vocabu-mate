@@ -11,7 +11,10 @@ const appsecrect = process.env.BAIDU_SECRET as string;
 const genSalt = (q: string) => {
   const salt = "1234567";
   //appid+q+salt+密钥的MD5值
-  return { sign: md5(`${appid}+${q}+${salt}+${appsecrect}`), salt };
+  return {
+    sign: md5(`${appid}+${encodeURIComponent(q)}+${salt}+${appsecrect}`),
+    salt,
+  };
 };
 
 export async function POST(req: Request) {
@@ -38,7 +41,7 @@ export async function POST(req: Request) {
 
     const { salt, sign } = genSalt(q);
 
-    const formData = new FormData();
+    const formData = new URLSearchParams();
     const payload = {
       ...body,
       appid,
