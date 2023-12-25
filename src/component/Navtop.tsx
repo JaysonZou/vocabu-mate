@@ -13,23 +13,29 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import AddNewWord from "./AddNewWord";
+import { useState } from "react";
+import Translate from "./Translate";
 
 const Navtop = () => {
+  const [sheetType, setSheetType] = useState("");
   return (
     <div className="fixed left-0 top-0 navbar border-b px-44">
-      <div className="navbar-start">
-        <Image src="/logo.png" alt="logo" width={20} height={20} />
-        <div className="ml-2">VocabuMate</div>
-        <Link href="/mywords" className="mx-4 hover:underline">
-          Words
-        </Link>
-        <Link href="/review" className="hover:underline">
-          Review
-        </Link>
-      </div>
       <Sheet>
+        <div className="navbar-start">
+          <Image src="/logo.png" alt="logo" width={20} height={20} />
+          <div className="ml-2">VocabuMate</div>
+          <Link href="/mywords" className="mx-4 hover:underline">
+            Words
+          </Link>
+          <Link href="/review" className="hover:underline">
+            Review
+          </Link>
+          <SheetTrigger onClick={() => setSheetType("trans")}>
+            Translate
+          </SheetTrigger>
+        </div>
         <div className="navbar-end">
-          <SheetTrigger>Open</SheetTrigger>
+          <SheetTrigger onClick={() => setSheetType("add")}>Open</SheetTrigger>
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
@@ -70,7 +76,7 @@ const Navtop = () => {
               done.
             </SheetDescription>
           </SheetHeader>
-          <AddNewWord />
+          {sheetType === "add" ? <AddNewWord /> : <Translate />}
         </SheetContent>
       </Sheet>
     </div>

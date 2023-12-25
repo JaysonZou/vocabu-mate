@@ -55,16 +55,13 @@ export async function POST(req: Request) {
       formData.append(key, payload[key]);
     }
 
-    const qRes = await fetch(
-      "https://fanyi-api.baidu.com/api/trans/vip/translate",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: formData,
-      }
-    );
+    const qRes = await fetch("https://openapi.youdao.com/v2/dict", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: formData,
+    });
     console.log(qRes, "=======> body");
 
     return qRes;
