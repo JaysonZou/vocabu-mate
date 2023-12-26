@@ -40,6 +40,7 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
+import WordFormDialog from "./WordFormDialog";
 
 interface ListProps {
   listData: WordData[];
@@ -84,21 +85,10 @@ export const List: React.FC<ListProps> = ({ listData }) => {
                 <ChooseFlag />
 
                 {/* 编辑 */}
-                <Dialog>
-                  <DialogTrigger>
-                    <FileEdit size={ICON_SIZE} />
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Are you sure absolutely sure?</DialogTitle>
-                      <DialogDescription>
-                        This action cannot be undone. This will permanently
-                        delete your account and remove your data from our
-                        servers.
-                      </DialogDescription>
-                    </DialogHeader>
-                  </DialogContent>
-                </Dialog>
+                <WordFormDialog
+                  mode="modify"
+                  trigger={<FileEdit size={ICON_SIZE} />}
+                ></WordFormDialog>
 
                 {/* 删除 */}
                 <AlertDialog>
