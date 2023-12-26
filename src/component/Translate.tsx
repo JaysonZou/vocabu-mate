@@ -1,5 +1,4 @@
 "use client";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Select,
   SelectContent,
@@ -43,28 +42,22 @@ export default function Translate() {
     } catch (error) {}
   };
   return (
-    <>
-      <Card>
-        <CardContent className="flex">
-          <Textarea ref={ref} placeholder="键入翻译" />
-          <div className="flex">
-            翻译为：
-            <Select
-              onValueChange={(value) => search(ref.current?.value, value)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select a language" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="en">En</SelectItem>
-                <SelectItem value="zh">Zh</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+    <div className="w-4/5 flex m-auto gap-8">
+      <Textarea rows={5} ref={ref} placeholder="键入翻译" />
+      <div className="flex">
+        翻译为：
+        <Select onValueChange={(value) => search(ref.current?.value, value)}>
+          <SelectTrigger>
+            <SelectValue placeholder="Select a language" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="en">En</SelectItem>
+            <SelectItem value="zh">Zh</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
 
-          <Textarea value={transRes} />
-        </CardContent>
-      </Card>
-    </>
+      <Textarea rows={5} value={transRes} />
+    </div>
   );
 }

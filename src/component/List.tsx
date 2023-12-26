@@ -1,19 +1,51 @@
 "use client";
 
-import { Delete, Flag, Trash2 } from "lucide-react";
+import { FileEdit, Flag, HelpCircle, Trash2 } from "lucide-react";
 import { WordData } from "./DisplayedWord";
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-} from "@/components/ui/popover";
+
 import { toast } from "react-hot-toast";
 import { useContext, useEffect, useState } from "react";
 import { DataContext } from "@/component/Providers";
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { DialogHeader } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import {
+  AlertDialogHeader,
+  AlertDialogFooter,
+} from "@/components/ui/alert-dialog";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+
 interface ListProps {
   listData: WordData[];
 }
+
+const ICON_SIZE = 18;
 
 export const List: React.FC<ListProps> = ({ listData }) => {
   // const [wordsList, setWordsList] = useState(listData);
@@ -39,84 +71,90 @@ export const List: React.FC<ListProps> = ({ listData }) => {
     }
   };
   return (
-    <div className="overflow-x-auto w-1/3 h-5/6">
-      <table className="table table-pin-rows">
-        {/* head */}
-        <thead>
-          <tr className="text-sm">
-            <th>
-              <span>Filter by flags</span>
-              <ChooseFlag />
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {wordsList.map((item) => {
-            return (
-              <tr key={item.word}>
-                <td>
-                  <div className="flex items-center gap-3">
-                    <div>
-                      <div className="font-bold text-lg mb-3 flex justify-start items-center gap-4">
-                        {item.word}
-                        <ChooseFlag />
-                        <Popover>
-                          <PopoverTrigger>
-                            <Trash2 size={16} />
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto">
-                            <div className="text-center mb-3">
-                              Delete the word{" "}
-                              <span className="badge badge-warning">
-                                {item.word}
-                              </span>
-                              ?
-                            </div>
-                            <div className="flex justify-end gap-2">
-                              <button className="btn btn-outline btn-xs">
-                                cancel
-                              </button>
-                              <button
-                                className="btn btn-neutral btn-xs"
-                                onClick={() => handleDel(item.word)}
-                              >
-                                ok
-                              </button>
-                            </div>
-                          </PopoverContent>
-                        </Popover>
-                      </div>
-                      <div className="text-sm opacity-50 mb-2">
-                        {item.comment}
-                      </div>
-                      <div>{item.sentence}</div>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+    <Accordion type="multiple" className="w-2/5">
+      {wordsList.map((item) => {
+        return (
+          <AccordionItem value={item.word} key={item.word}>
+            <div className="flex items-center justify-between">
+              <span className=" font-semibold text-xl ml-10 mr-20  w-10">
+                {item.word}
+              </span>
+              <div className=" flex gap-2">
+                {/* 旗标 */}
+                <ChooseFlag />
+
+                {/* 编辑 */}
+                <Dialog>
+                  <DialogTrigger>
+                    <FileEdit size={ICON_SIZE} />
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Are you sure absolutely sure?</DialogTitle>
+                      <DialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete your account and remove your data from our
+                        servers.
+                      </DialogDescription>
+                    </DialogHeader>
+                  </DialogContent>
+                </Dialog>
+
+                {/* 删除 */}
+                <AlertDialog>
+                  <AlertDialogTrigger>
+                    <Trash2 size={ICON_SIZE} />
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Delete the word{" "}
+                        <span className="badge badge-warning">{item.word}</span>
+                        ?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete and remove your data from our servers.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction onClick={() => handleDel(item.word)}>
+                        Continue
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </div>
+              <AccordionTrigger>
+                <HelpCircle size={ICON_SIZE} />
+              </AccordionTrigger>
+            </div>
+            <AccordionContent className="text-sm opacity-50 mb-2">
+              {item.comment}
+              <div>{item.sentence}</div>
+            </AccordionContent>
+          </AccordionItem>
+        );
+      })}
+    </Accordion>
   );
 };
 
 export const ChooseFlag = ({ currentColor = "" }) => {
   const colors = ["red", "green", "orange", "pink"];
   return (
-    <Popover>
-      <PopoverTrigger>
-        <Flag size={16} />
-      </PopoverTrigger>
-      <PopoverContent className="w-auto flex flex-col gap-2 p-1">
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <Flag size={ICON_SIZE} />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-20">
         {colors.map((c) => (
-          <button key={c} className="btn btn-ghost btn-xs">
-            <Flag size={16} color={c} fill={c} />
-            {""}
-          </button>
+          <DropdownMenuItem key={c} className="flex justify-center">
+            <Flag size={ICON_SIZE} color={c} fill={c} />
+          </DropdownMenuItem>
         ))}
-      </PopoverContent>
-    </Popover>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };

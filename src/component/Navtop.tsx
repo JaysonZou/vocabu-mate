@@ -15,66 +15,64 @@ import {
 import AddNewWord from "./AddNewWord";
 import { useState } from "react";
 import Translate from "./Translate";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@radix-ui/react-popover";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
 
 const Navtop = () => {
   const [sheetType, setSheetType] = useState("");
   return (
-    <div className="fixed left-0 top-0 navbar border-b px-44">
+    <div className="fixed left-0 top-0 h-16 border-b px-44 flex justify-between w-full">
       <Sheet>
-        <div className="navbar-start">
+        <div className="flex items-center">
           <Image src="/logo.png" alt="logo" width={20} height={20} />
           <div className="ml-2">VocabuMate</div>
           <Link href="/mywords" className="mx-4 hover:underline">
             Words
           </Link>
-          <Link href="/review" className="hover:underline">
+          <Link href="/review" className="hover:underline mr-4">
             Review
           </Link>
           <SheetTrigger onClick={() => setSheetType("trans")}>
             Translate
           </SheetTrigger>
         </div>
-        <div className="navbar-end">
+        <div className="flex">
           <SheetTrigger onClick={() => setSheetType("add")}>Open</SheetTrigger>
-          <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar"
-            >
+          <DropdownMenu>
+            <DropdownMenuTrigger>
               <div className="w-10 rounded-full">
                 <img
                   alt="Tailwind CSS Navbar component"
                   src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
                 />
               </div>
-            </div>
-            <ul
-              tabIndex={0}
-              className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
-            >
-              <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li>
-              <li>
-                <a>Settings</a>
-              </li>
-              <li>
-                <a onClick={() => signOut()}>Logout</a>
-              </li>
-            </ul>
-          </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Billing</DropdownMenuItem>
+              <DropdownMenuItem>Team</DropdownMenuItem>
+              <DropdownMenuItem>Subscription</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
         <SheetContent side={"top"}>
           <SheetHeader>
-            <SheetTitle>Gather a new word</SheetTitle>
+            {/* <SheetTitle>Gather a new word</SheetTitle>
             <SheetDescription>
               Collet a new word to your list here. Click save when you&apos;re
               done.
-            </SheetDescription>
+            </SheetDescription> */}
           </SheetHeader>
           {sheetType === "add" ? <AddNewWord /> : <Translate />}
         </SheetContent>
