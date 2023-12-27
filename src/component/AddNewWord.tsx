@@ -5,6 +5,8 @@ import { DataContext } from "../component/Providers";
 import { useContext } from "react";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 const AddNewWord = () => {
   const { wordsList, setWordsList } = useContext(DataContext);
@@ -14,8 +16,8 @@ const AddNewWord = () => {
       comment: "",
       sentence: "",
     },
-    onSubmit: (values, { setSubmitting }) => {
-      const result = fetch("/api/word/add", {
+    onSubmit: async (values, { setSubmitting }) => {
+      const result = await fetch("/api/word/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -23,9 +25,14 @@ const AddNewWord = () => {
         body: JSON.stringify(values),
       });
       setSubmitting(false);
-      setWordsList([...wordsList, values]);
-      toast.success("new word gathered!");
-      formik.resetForm();
+
+      if (result.ok) {
+        toast.success("new word gathered!");
+        formik.resetForm();
+        setWordsList([...wordsList, values]);
+      } else {
+        toast.error(result.statusText);
+      }
     },
   });
 
@@ -36,10 +43,10 @@ const AddNewWord = () => {
           <label htmlFor="word" className="text-right text-sm font-medium">
             Word
           </label>
-          <input
+          <Input
             id="word"
             name="word"
-            className="input input-bordered col-span-3"
+            className="col-span-3"
             onChange={formik.handleChange}
             value={formik.values.word}
           />
@@ -51,10 +58,10 @@ const AddNewWord = () => {
           >
             Comment
           </label>
-          <textarea
+          <Textarea
             id="comment"
             name="comment"
-            className="textarea textarea-bordered col-span-3"
+            className="col-span-3"
             onChange={formik.handleChange}
             value={formik.values.comment}
           />
@@ -66,10 +73,10 @@ const AddNewWord = () => {
           >
             Sentence
           </label>
-          <textarea
+          <Textarea
             id="sentence"
             name="sentence"
-            className="textarea textarea-bordered col-span-3"
+            className="col-span-3"
             onChange={formik.handleChange}
             value={formik.values.sentence}
           />

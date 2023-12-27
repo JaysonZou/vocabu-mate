@@ -8,6 +8,7 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const word = body.word;
+    const flag = body.flag;
 
     const session = await getServerSession(authOptions);
 
@@ -15,20 +16,17 @@ export async function POST(req: Request) {
       return new Response("Unauthorized", { status: 401 });
     }
 
-    // check if user is already added
-    // const isAlreadyAdded = (await fetchRedis(
-    //   "sismember",
-    //   `user:${idToAdd}:incoming_friend_requests`,
-    //   session.user.id
-    // )) as 0 | 1;
+    // check if word exist
+    const isExistWord = await fetchRedis("hget", `word:${word}`);
 
-    // if (isAlreadyAdded) {
-    //   return new Response("Already added this user", { status: 400 });
-    // }
-
-    await db.hset(`word`, {
-      [`${word}`]: body,
-    });
+    if (isExistWord) {
+      await db.hset(`word`, {
+        [`${word}`]: {
+          ...isExistWord,
+          flag,
+        },
+      });
+    }
 
     return new Response("OK");
   } catch (error) {

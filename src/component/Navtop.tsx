@@ -28,6 +28,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Navtop = () => {
   const [sheetType, setSheetType] = useState("");
@@ -51,12 +52,10 @@ const Navtop = () => {
           <SheetTrigger onClick={() => setSheetType("add")}>Open</SheetTrigger>
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <div className="w-10 rounded-full">
-                <img
-                  alt="Tailwind CSS Navbar component"
-                  src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                />
-              </div>
+              <Avatar>
+                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarFallback>User</AvatarFallback>
+              </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem>Profile</DropdownMenuItem>

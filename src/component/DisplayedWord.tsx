@@ -2,6 +2,7 @@ export interface WordData {
   word: string;
   sentence: string;
   comment: string;
+  flag?: string;
 }
 
 interface DisaplayWordProps {
