@@ -1,4 +1,3 @@
-import { fetchRedis } from "@/helpers/redis";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { getServerSession } from "next-auth";
@@ -14,17 +13,6 @@ export async function POST(req: Request) {
     if (!session) {
       return new Response("Unauthorized", { status: 401 });
     }
-
-    // check if user is already added
-    // const isAlreadyAdded = (await fetchRedis(
-    //   "sismember",
-    //   `user:${idToAdd}:incoming_friend_requests`,
-    //   session.user.id
-    // )) as 0 | 1;
-
-    // if (isAlreadyAdded) {
-    //   return new Response("Already added this user", { status: 400 });
-    // }
 
     await db.hset(`word`, {
       [`${word}`]: body,

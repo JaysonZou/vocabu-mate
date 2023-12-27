@@ -7,9 +7,11 @@ import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import useUnauthorizedRedirect from "@/lib/useUnauthorizedRedirect";
 
 const AddNewWord = () => {
   const { wordsList, setWordsList } = useContext(DataContext);
+  const handleUnauthorized = useUnauthorizedRedirect();
   const formik = useFormik({
     initialValues: {
       word: "",
@@ -32,6 +34,9 @@ const AddNewWord = () => {
         setWordsList([...wordsList, values]);
       } else {
         toast.error(result.statusText);
+        if (result.status === 401) {
+          handleUnauthorized();
+        }
       }
     },
   });

@@ -1,7 +1,6 @@
-import { fetchRedis } from "@/helpers/redis";
-// import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
-// import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth";
 import { z } from "zod";
 
 export async function DELETE(req: Request) {
@@ -9,22 +8,11 @@ export async function DELETE(req: Request) {
     const body = await req.json();
     const word = body.word;
 
-    // const session = await getServerSession(authOptions);
+    const session = await getServerSession(authOptions);
 
-    // if (!session) {
-    //   return new Response("Unauthorized", { status: 401 });
-    // }
-
-    // check if user is already added
-    // const isAlreadyAdded = (await fetchRedis(
-    //   "sismember",
-    //   `user:${idToAdd}:incoming_friend_requests`,
-    //   session.user.id
-    // )) as 0 | 1;
-
-    // if (isAlreadyAdded) {
-    //   return new Response("Already added this user", { status: 400 });
-    // }
+    if (!session) {
+      return new Response("Unauthorized", { status: 401 });
+    }
 
     await db.hdel(`word`, word);
 
