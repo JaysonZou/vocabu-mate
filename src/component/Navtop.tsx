@@ -30,6 +30,7 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import Dictionary from "./Dictionary";
 
 interface NavtopProps {
   user: User;
@@ -51,6 +52,9 @@ const Navtop: React.FC<NavtopProps> = ({ user }) => {
           </Link>
           <SheetTrigger onClick={() => setSheetType("trans")}>
             Translate
+          </SheetTrigger>
+          <SheetTrigger onClick={() => setSheetType("dict")}>
+            Dictionary
           </SheetTrigger>
         </div>
         <div className="flex">
@@ -84,7 +88,16 @@ const Navtop: React.FC<NavtopProps> = ({ user }) => {
               done.
             </SheetDescription> */}
           </SheetHeader>
-          {sheetType === "add" ? <AddNewWord /> : <Translate />}
+          {(() => {
+            switch (sheetType) {
+              case "add":
+                return <AddNewWord />;
+              case "trans":
+                return <Translate />;
+              case "dict":
+                return <Dictionary />;
+            }
+          })()}
         </SheetContent>
       </Sheet>
     </div>
