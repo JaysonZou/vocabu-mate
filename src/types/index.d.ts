@@ -4,3 +4,11 @@ interface User {
   image: string;
   id: string;
 }
+
+interface Post {
+  id: string;
+  authorId: string;
+  content: string;
+  title: string;
+  published: string;
+}

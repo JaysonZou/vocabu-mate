@@ -17,12 +17,12 @@ export async function POST(req: Request) {
     }
 
     // check if word exist
-    const isExistWord = await fetchRedis("hget", `word:${word}`);
+    const isExistWord = await fetchRedis("hget", "word", word);
 
     if (isExistWord) {
       await db.hset(`word`, {
-        [`${word}`]: {
-          ...isExistWord,
+        [word]: {
+          ...JSON.parse(isExistWord),
           flag,
         },
       });

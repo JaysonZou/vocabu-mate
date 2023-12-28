@@ -29,7 +29,7 @@ const AddNewWord = () => {
       setSubmitting(false);
 
       if (result.ok) {
-        toast.success("new word gathered!");
+        toast.success("Successfully add!");
         formik.resetForm();
         setWordsList([...wordsList, values]);
       } else {

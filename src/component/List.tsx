@@ -4,7 +4,7 @@ import { ChevronDown, FileEdit, Flag, HelpCircle, Trash2 } from "lucide-react";
 import { WordData } from "./DisplayedWord";
 
 import { toast } from "react-hot-toast";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { DataContext } from "@/component/Providers";
 
 import {
@@ -33,6 +33,8 @@ import {
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 import WordFormDialog from "./WordFormDialog";
+import { Button } from "@/components/ui/button";
+import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
 
 interface ListProps {
   listData: WordData[];
@@ -41,12 +43,17 @@ interface ListProps {
 const ICON_SIZE = 18;
 
 export const List: React.FC<ListProps> = ({ listData }) => {
-  // const [wordsList, setWordsList] = useState(listData);
   const { wordsList, setWordsList } = useContext(DataContext);
+  const [filterFlag, setFilterFlag] = useState("");
 
   useEffect(() => {
     setWordsList(listData);
   }, [listData, setWordsList]);
+
+  const filteredList = useMemo(
+    () => wordsList.filter((w) => (filterFlag ? w.flag === filterFlag : w)),
+    [wordsList, filterFlag]
+  );
 
   const handleDel = async (word: string) => {
     try {
@@ -64,12 +71,34 @@ export const List: React.FC<ListProps> = ({ listData }) => {
     }
   };
 
-  const searchByFlag = () => {};
+  const changeFlagForWord = async (word: string, flag = "") => {
+    try {
+      await fetch("/api/word/flag", {
+        method: "POST",
+        body: JSON.stringify({
+          word,
+          flag,
+        }),
+      });
+      setWordsList((prev) =>
+        prev.map((w) => {
+          if (w.word === word) {
+            w.flag = flag;
+          }
+          return w;
+        })
+      );
+    } catch (error) {}
+  };
+
   return (
-    <div className="flex flex-col w-3/5">
-      <ChooseFlag />
+    <div className="flex flex-col w-[420px]">
+      <div className="border rounded-md py-1">
+        <ChooseFlag currentColor={filterFlag} onSelect={setFilterFlag} />
+        {filterFlag}
+      </div>
       <Accordion type="multiple">
-        {wordsList.map((item) => {
+        {filteredList.map((item) => {
           return (
             <AccordionItem value={item.word} key={item.word}>
               <div className="flex items-center justify-between">
@@ -77,7 +106,13 @@ export const List: React.FC<ListProps> = ({ listData }) => {
                   <AccordionTrigger>{item.word}</AccordionTrigger>
 
                   {/* 旗标 */}
-                  <ChooseFlag />
+                  <ChooseFlag
+                    key={item.word}
+                    currentColor={item.flag}
+                    onSelect={(flag: string) =>
+                      changeFlagForWord(item.word, flag)
+                    }
+                  />
                 </span>
                 <div className=" flex gap-2">
                   {/* 编辑 */}
@@ -127,23 +162,35 @@ export const List: React.FC<ListProps> = ({ listData }) => {
   );
 };
 
-export const ChooseFlag = ({ currentColor = "" }) => {
+export const ChooseFlag = ({ currentColor = "", onSelect }: any) => {
   const colors = ["red", "green", "orange", "pink", "blue", "yellow"];
+  const flagIcon = currentColor ? (
+    <Flag size={ICON_SIZE} color={currentColor} fill={currentColor} />
+  ) : (
+    <Flag size={ICON_SIZE} />
+  );
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Flag size={ICON_SIZE} />
+        <Button variant={"ghost"} size={"icon"}>
+          {flagIcon}
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-20">
         {colors.map((c) => (
           <DropdownMenuItem
             key={c}
             className="flex justify-start text-neutral-500"
+            onClick={() => onSelect(c)}
           >
             <Flag size={ICON_SIZE} color={c} fill={c} className="mr-2" />{" "}
             {c.toString().toUpperCase()}
           </DropdownMenuItem>
         ))}
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="text-center" onClick={() => onSelect("")}>
+          清除旗标
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

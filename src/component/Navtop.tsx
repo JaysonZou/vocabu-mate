@@ -1,8 +1,9 @@
 "use client";
-import { PlusSquare } from "lucide-react";
+import { Plus, PlusIcon, PlusSquare } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import {
   Sheet,
@@ -28,9 +29,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 
-const Navtop = () => {
+interface NavtopProps {
+  user: User;
+}
+
+const Navtop: React.FC<NavtopProps> = ({ user }) => {
   const [sheetType, setSheetType] = useState("");
   return (
     <div className="fixed left-0 top-0 h-16 border-b px-44 flex justify-between w-full">
@@ -49,12 +54,18 @@ const Navtop = () => {
           </SheetTrigger>
         </div>
         <div className="flex">
-          <SheetTrigger onClick={() => setSheetType("add")}>Open</SheetTrigger>
+          <SheetTrigger onClick={() => setSheetType("add")}>
+            <Button variant={"link"} size={"sm"} className="mr-2">
+              New word
+            </Button>
+          </SheetTrigger>
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>User</AvatarFallback>
+                <AvatarImage
+                  src={user?.image || "https://github.com/shadcn.png"}
+                />
+                <AvatarFallback>You</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent>

@@ -62,7 +62,6 @@ export async function POST(req: Request) {
       },
       body: formData,
     });
-    console.log(qRes, "=======> body");
 
     return qRes;
   } catch (error) {
