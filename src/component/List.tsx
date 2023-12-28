@@ -1,6 +1,13 @@
 "use client";
 
-import { ChevronDown, FileEdit, Flag, HelpCircle, Trash2 } from "lucide-react";
+import {
+  ChevronDown,
+  FileEdit,
+  Flag,
+  HelpCircle,
+  Search,
+  Trash2,
+} from "lucide-react";
 import { WordData } from "./DisplayedWord";
 
 import { toast } from "react-hot-toast";
@@ -35,6 +42,7 @@ import {
 import WordFormDialog from "./WordFormDialog";
 import { Button } from "@/components/ui/button";
 import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
+import { Input } from "@/components/ui/input";
 
 interface ListProps {
   listData: WordData[];
@@ -45,14 +53,18 @@ const ICON_SIZE = 18;
 export const List: React.FC<ListProps> = ({ listData }) => {
   const { wordsList, setWordsList } = useContext(DataContext);
   const [filterFlag, setFilterFlag] = useState("");
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     setWordsList(listData);
   }, [listData, setWordsList]);
 
   const filteredList = useMemo(
-    () => wordsList.filter((w) => (filterFlag ? w.flag === filterFlag : w)),
-    [wordsList, filterFlag]
+    () =>
+      wordsList
+        .filter((w) => (filterFlag ? w.flag === filterFlag : w))
+        .filter((w) => w.word.includes(searchValue)),
+    [wordsList, filterFlag, searchValue]
   );
 
   const handleDel = async (word: string) => {
@@ -93,8 +105,14 @@ export const List: React.FC<ListProps> = ({ listData }) => {
 
   return (
     <div className="flex flex-col w-[420px]">
-      <div className="border rounded-md py-1">
+      <div className="flex items-center border rounded-md py-1">
         <ChooseFlag currentColor={filterFlag} onSelect={setFilterFlag} />
+        <Search size={ICON_SIZE} />
+        <Input
+          className="w-[140px]"
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+        />
         {filterFlag}
       </div>
       <Accordion type="multiple">
