@@ -1,4 +1,5 @@
 "use client";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -42,10 +43,10 @@ export default function Translate() {
     } catch (error) {}
   };
   return (
-    <div className="w-4/5 flex m-auto gap-8">
+    <div className="flex flex-col gap-8">
       <Textarea rows={5} ref={ref} placeholder="键入翻译" />
-      <div className="flex">
-        翻译为：
+      <div className="flex gap-10">
+        <Label>翻译为：</Label>
         <Select onValueChange={(value) => search(ref.current?.value, value)}>
           <SelectTrigger>
             <SelectValue placeholder="Select a language" />

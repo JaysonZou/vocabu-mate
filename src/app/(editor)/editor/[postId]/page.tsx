@@ -2,8 +2,8 @@ import { notFound, redirect } from "next/navigation";
 
 import { authOptions } from "@/lib/auth";
 import { getCurrentUser } from "@/lib/session";
-import { Editor } from "@/components/editor";
 import { fetchRedis } from "@/helpers/redis";
+import { MilkEditor } from "../../../../component/Editor";
 
 async function getPostForUser(postId: Post["id"], userId: User["id"]) {
   return await fetchRedis("get", `post:${postId}:authorId:${userId}`);
@@ -20,20 +20,15 @@ export default async function EditorPage({ params }: EditorPageProps) {
     redirect(authOptions?.pages?.signIn || "/login");
   }
 
-  const post = await getPostForUser(params.postId, user.id);
+  // const post = await getPostForUser(params.postId, user.id);
 
-  if (!post) {
-    notFound();
-  }
+  // if (!post) {
+  //   notFound();
+  // }
 
   return (
-    <Editor
-      post={{
-        id: post.id,
-        title: post.title,
-        content: post.content,
-        published: post.published,
-      }}
-    />
+    <div className="">
+      <MilkEditor />
+    </div>
   );
 }

@@ -27,5 +27,7 @@ export default async function WordList() {
 }
 
 function Empty() {
-  return <h1 className=" text-lg font-bold pt-20">There is no word yet</h1>;
+  return (
+    <div className="border text-lg font-bold pt-20">There is no word yet</div>
+  );
 }

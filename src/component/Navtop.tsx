@@ -41,13 +41,15 @@ const Navtop: React.FC<NavtopProps> = ({ user }) => {
   return (
     <div className="fixed left-0 top-0 h-16 border-b px-44 flex justify-between w-full">
       <Sheet>
-        <div className="flex items-center">
-          <Image src="/logo.png" alt="logo" width={20} height={20} />
-          <div className="ml-2">VocabuMate</div>
-          <Link href="/mywords" className="mx-4 hover:underline">
+        <div className="flex items-center gap-4">
+          <div className="flex items-center">
+            <Image src="/logo.png" alt="logo" width={20} height={20} />
+            <div className="ml-2">VocabuMate</div>
+          </div>
+          <Link href="/mywords" className="hover:underline">
             Words
           </Link>
-          <Link href="/review" className="hover:underline mr-4">
+          <Link href="/review" className="hover:underline ">
             Review
           </Link>
           <SheetTrigger onClick={() => setSheetType("trans")}>
@@ -59,9 +61,7 @@ const Navtop: React.FC<NavtopProps> = ({ user }) => {
         </div>
         <div className="flex">
           <SheetTrigger onClick={() => setSheetType("add")}>
-            <Button variant={"link"} size={"sm"} className="mr-2">
-              New word
-            </Button>
+            New word
           </SheetTrigger>
           <DropdownMenu>
             <DropdownMenuTrigger>
@@ -82,22 +82,43 @@ const Navtop: React.FC<NavtopProps> = ({ user }) => {
         </div>
         <SheetContent side={"top"}>
           <SheetHeader>
-            {/* <SheetTitle>Gather a new word</SheetTitle>
+            <SheetTitle>
+              {(() => {
+                switch (sheetType) {
+                  case "add":
+                    return "Add word";
+                  case "trans":
+                    return "Translate";
+                  case "dict":
+                    return "Dictionary";
+                }
+              })()}
+            </SheetTitle>
             <SheetDescription>
-              Collet a new word to your list here. Click save when you&apos;re
-              done.
-            </SheetDescription> */}
+              {(() => {
+                switch (sheetType) {
+                  case "add":
+                    return "Add a new word to your list";
+                  case "trans":
+                    return "Translate api is used by Baidu";
+                  case "dict":
+                    return "en-en dictionary";
+                }
+              })()}
+            </SheetDescription>
           </SheetHeader>
-          {(() => {
-            switch (sheetType) {
-              case "add":
-                return <AddNewWord />;
-              case "trans":
-                return <Translate />;
-              case "dict":
-                return <Dictionary />;
-            }
-          })()}
+          <div className="pt-4 pb-8 w-[400px] m-auto">
+            {(() => {
+              switch (sheetType) {
+                case "add":
+                  return <AddNewWord />;
+                case "trans":
+                  return <Translate />;
+                case "dict":
+                  return <Dictionary />;
+              }
+            })()}
+          </div>
         </SheetContent>
       </Sheet>
     </div>

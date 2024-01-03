@@ -108,8 +108,8 @@ export const List: React.FC<ListProps> = ({ listData }) => {
       <div className="flex items-center border rounded-md py-1">
         <ChooseFlag currentColor={filterFlag} onSelect={setFilterFlag} />
         <Search size={ICON_SIZE} />
-        <Input
-          className="w-[140px]"
+        <input
+          className="w-[140px] border-b-2 outline-none"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />

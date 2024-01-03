@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import AddNewWord from "./AddNewWord";
 
 interface FormProps {
   trigger: React.ReactNode;
@@ -44,7 +45,7 @@ export default function DrawerDialogDemo({ trigger, mode }: FormProps) {
               Make changes to your profile here. Click save when you are done.
             </DialogDescription>
           </DialogHeader>
-          <ProfileForm />
+          <AddNewWord />
         </DialogContent>
       </Dialog>
     );
@@ -60,7 +61,9 @@ export default function DrawerDialogDemo({ trigger, mode }: FormProps) {
             Make changes to your profile here. Click save when you are done.
           </DrawerDescription>
         </DrawerHeader>
-        <ProfileForm className="px-4" />
+        <div className="px-4">
+          <AddNewWord />
+        </div>
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>

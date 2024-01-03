@@ -8,8 +8,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import useUnauthorizedRedirect from "@/lib/useUnauthorizedRedirect";
+import { cn } from "@/lib/utils";
+import { Label } from "@/components/ui/label";
 
-const AddNewWord = () => {
+const AddNewWord = ({ className }: React.ComponentProps<"form">) => {
   const { wordsList, setWordsList } = useContext(DataContext);
   const handleUnauthorized = useUnauthorizedRedirect();
   const formik = useFormik({
@@ -19,7 +21,7 @@ const AddNewWord = () => {
       sentence: "",
     },
     onSubmit: async (values, { setSubmitting }) => {
-      const result = await fetch("/api/word/add", {
+      const result = await fetch("/api/word/modify", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,58 +44,42 @@ const AddNewWord = () => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div className="grid gap-4 py-4">
-        <div className="grid grid-cols-4 items-center gap-4">
-          <label htmlFor="word" className="text-right text-sm font-medium">
-            Word
-          </label>
-          <Input
-            id="word"
-            name="word"
-            className="col-span-3"
-            onChange={formik.handleChange}
-            value={formik.values.word}
-          />
-        </div>
-        <div className="grid grid-cols-4 items-center gap-4">
-          <label
-            htmlFor="comment"
-            className="self-start text-right text-sm font-medium"
-          >
-            Comment
-          </label>
-          <Textarea
-            id="comment"
-            name="comment"
-            className="col-span-3"
-            onChange={formik.handleChange}
-            value={formik.values.comment}
-          />
-        </div>
-        <div className="grid grid-cols-4 items-center gap-4">
-          <label
-            htmlFor="sentence"
-            className="self-start text-right text-sm font-medium"
-          >
-            Sentence
-          </label>
-          <Textarea
-            id="sentence"
-            name="sentence"
-            className="col-span-3"
-            onChange={formik.handleChange}
-            value={formik.values.sentence}
-          />
-        </div>
+    <form
+      onSubmit={formik.handleSubmit}
+      className={cn("grid items-start gap-4", className)}
+    >
+      <div className="grid gap-2">
+        <Label htmlFor="word">Word</Label>
+        <Input
+          id="word"
+          name="word"
+          onChange={formik.handleChange}
+          value={formik.values.word}
+        />
       </div>
-      <SheetFooter>
-        <SheetClose asChild>
-          <Button type="submit" disabled={formik.isSubmitting}>
-            Save Word
-          </Button>
-        </SheetClose>
-      </SheetFooter>
+      <div className="grid gap-2">
+        <Label htmlFor="comment">Comment</Label>
+        <Textarea
+          id="comment"
+          name="comment"
+          onChange={formik.handleChange}
+          value={formik.values.comment}
+        />
+      </div>
+      <div className="grid gap-2">
+        <Label htmlFor="sentence">Sentence</Label>
+        <Textarea
+          id="sentence"
+          name="sentence"
+          onChange={formik.handleChange}
+          value={formik.values.sentence}
+        />
+      </div>
+      <SheetClose asChild>
+        <Button type="submit" disabled={formik.isSubmitting}>
+          Save Word
+        </Button>
+      </SheetClose>
     </form>
   );
 };

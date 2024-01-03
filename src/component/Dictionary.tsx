@@ -27,7 +27,6 @@ export default function Dictionary() {
   };
   return (
     <>
-      <SheetHeader>asdf</SheetHeader>
       <div className="flex w-full items-center space-x-2 justify-center">
         <Input
           type="text"
