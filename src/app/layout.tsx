@@ -17,14 +17,10 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = (await getCurrentUser()) as User;
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
-          <Navtop user={user} />
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

@@ -10,12 +10,19 @@ import { Textarea } from "@/components/ui/textarea";
 import useUnauthorizedRedirect from "@/lib/useUnauthorizedRedirect";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
+import { WordData } from "./DisplayedWord";
 
-const AddNewWord = ({ className }: React.ComponentProps<"form">) => {
+interface AddWordProps extends React.ComponentProps<"form"> {
+  initValue?: WordData;
+}
+const AddNewWord = ({
+  className,
+  initValue,
+}: AddWordProps & React.ComponentProps<"form">) => {
   const { wordsList, setWordsList } = useContext(DataContext);
   const handleUnauthorized = useUnauthorizedRedirect();
   const formik = useFormik({
-    initialValues: {
+    initialValues: initValue ?? {
       word: "",
       comment: "",
       sentence: "",
@@ -31,9 +38,12 @@ const AddNewWord = ({ className }: React.ComponentProps<"form">) => {
       setSubmitting(false);
 
       if (result.ok) {
-        toast.success("Successfully add!");
+        toast.success(`Successfully ${initValue ? "edit" : "add"}!`);
+        const newList = wordsList.map((w) =>
+          w.word === values.word ? values : w
+        );
+        setWordsList(newList);
         formik.resetForm();
-        setWordsList([...wordsList, values]);
       } else {
         toast.error(result.statusText);
         if (result.status === 401) {

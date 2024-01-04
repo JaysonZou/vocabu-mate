@@ -1,13 +1,5 @@
 "use client";
-
-import {
-  ChevronDown,
-  FileEdit,
-  Flag,
-  HelpCircle,
-  Search,
-  Trash2,
-} from "lucide-react";
+import { Flag, Pencil, Search, Trash2 } from "lucide-react";
 import { WordData } from "./DisplayedWord";
 
 import { toast } from "react-hot-toast";
@@ -136,13 +128,20 @@ export const List: React.FC<ListProps> = ({ listData }) => {
                   {/* 编辑 */}
                   <WordFormDialog
                     mode="modify"
-                    trigger={<FileEdit size={ICON_SIZE} />}
+                    trigger={
+                      <Button variant={"ghost"} size={"icon"}>
+                        <Pencil size={ICON_SIZE} />
+                      </Button>
+                    }
+                    initData={item}
                   ></WordFormDialog>
 
                   {/* 删除 */}
                   <AlertDialog>
                     <AlertDialogTrigger>
-                      <Trash2 size={ICON_SIZE} />
+                      <Button variant={"ghost"} size={"icon"}>
+                        <Trash2 size={ICON_SIZE} />
+                      </Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>

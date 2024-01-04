@@ -65,7 +65,6 @@ export async function POST(req: Request) {
 
     return qRes;
   } catch (error) {
-    console.log(error, "error");
     if (error instanceof z.ZodError) {
       return new Response("Invalid request payload", { status: 422 });
     }

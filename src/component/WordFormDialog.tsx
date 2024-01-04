@@ -21,15 +21,15 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import AddNewWord from "./AddNewWord";
+import { WordData } from "./DisplayedWord";
 
 interface FormProps {
   trigger: React.ReactNode;
   mode: "add" | "modify";
+  initData: WordData;
 }
-export default function DrawerDialogDemo({ trigger, mode }: FormProps) {
+export default function DrawerDialogDemo({ trigger, initData }: FormProps) {
   const [open, setOpen] = React.useState(false);
   // const isDesktop = useMediaQuery("(min-width: 768px)");
   const isDesktop = true;
@@ -40,12 +40,12 @@ export default function DrawerDialogDemo({ trigger, mode }: FormProps) {
         <DialogTrigger asChild>{trigger}</DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
+            <DialogTitle>Edit word</DialogTitle>
             <DialogDescription>
-              Make changes to your profile here. Click save when you are done.
+              Make changes to your word here. Click save when you are done.
             </DialogDescription>
           </DialogHeader>
-          <AddNewWord />
+          <AddNewWord initValue={initData} />
         </DialogContent>
       </Dialog>
     );
@@ -62,7 +62,7 @@ export default function DrawerDialogDemo({ trigger, mode }: FormProps) {
           </DrawerDescription>
         </DrawerHeader>
         <div className="px-4">
-          <AddNewWord />
+          <AddNewWord initValue={initData} />
         </div>
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
@@ -71,25 +71,5 @@ export default function DrawerDialogDemo({ trigger, mode }: FormProps) {
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
-  );
-}
-
-function ProfileForm({ className }: React.ComponentProps<"form">) {
-  return (
-    <form className={cn("grid items-start gap-4", className)}>
-      <div className="grid gap-2">
-        <Label htmlFor="word">Word</Label>
-        <Input type="email" id="word" defaultValue="enter your word" />
-      </div>
-      <div className="grid gap-2">
-        <Label htmlFor="comment">Comment</Label>
-        <Input id="comment" defaultValue="enter your comment" />
-      </div>
-      <div className="grid gap-2">
-        <Label htmlFor="sentence">Sentence</Label>
-        <Input id="sentence" defaultValue="enter your sentence" />
-      </div>
-      <Button type="submit">Save word</Button>
-    </form>
   );
 }

@@ -4,7 +4,6 @@ interface User {
   image: string;
   id: string;
 }
-
 interface Post {
   id: string;
   authorId: string;

@@ -12,17 +12,22 @@ interface DictRes {
   word: string;
 }
 
+interface NoFound {
+  title: string;
+  resolution: string;
+  messaege: string;
+}
+
 export default function Dictionary() {
   const [word, setWord] = useState("");
-  const [res, setRes] = useState<DictRes>();
+  const [res, setRes] = useState<DictRes | NoFound>();
 
   const lookUp = async (word: string) => {
     const res = await fetch(
       "https://api.dictionaryapi.dev/api/v2/entries/en/" + word
     );
 
-    const [data] = await res.json();
-
+    const data = await res.json();
     setRes(data);
   };
   return (
