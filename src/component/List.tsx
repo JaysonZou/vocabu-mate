@@ -35,6 +35,8 @@ import WordFormDialog from "./WordFormDialog";
 import { Button } from "@/components/ui/button";
 import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
 import { Input } from "@/components/ui/input";
+import { PostOperations } from "./Operation";
+import { cn } from "@/lib/utils";
 
 interface ListProps {
   listData: WordData[];
@@ -70,8 +72,10 @@ export const List: React.FC<ListProps> = ({ listData }) => {
       });
       setWordsList((prev) => prev.filter((w) => w.word !== word));
       toast.success("Successfully delete");
+      return true;
     } catch (error) {
       toast.error("Something went wrong. Please try later.");
+      return false;
     }
   };
 
@@ -96,8 +100,12 @@ export const List: React.FC<ListProps> = ({ listData }) => {
   };
 
   return (
-    <div className="flex flex-col w-[420px]">
-      <div className="flex items-center border rounded-md py-1">
+    <div
+      className={cn(
+        "flex min-h-[400px] flex-col items-center justify-center rounded-md border border-dashed text-center animate-in fade-in-50"
+      )}
+    >
+      <div className="flex items-center border rounded-md py-1 w-full">
         <ChooseFlag currentColor={filterFlag} onSelect={setFilterFlag} />
         <Search size={ICON_SIZE} />
         <input
@@ -107,7 +115,7 @@ export const List: React.FC<ListProps> = ({ listData }) => {
         />
         {filterFlag}
       </div>
-      <Accordion type="multiple">
+      <Accordion type="multiple" className="w-full">
         {filteredList.map((item) => {
           return (
             <AccordionItem value={item.word} key={item.word}>
@@ -125,46 +133,7 @@ export const List: React.FC<ListProps> = ({ listData }) => {
                   />
                 </span>
                 <div className=" flex gap-2">
-                  {/* 编辑 */}
-                  <WordFormDialog
-                    mode="modify"
-                    trigger={
-                      <Button variant={"ghost"} size={"icon"}>
-                        <Pencil size={ICON_SIZE} />
-                      </Button>
-                    }
-                    initData={item}
-                  ></WordFormDialog>
-
-                  {/* 删除 */}
-                  <AlertDialog>
-                    <AlertDialogTrigger>
-                      <Button variant={"ghost"} size={"icon"}>
-                        <Trash2 size={ICON_SIZE} />
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>
-                          Delete the word{" "}
-                          <span className="badge badge-warning">
-                            {item.word}
-                          </span>
-                          ?
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          This action cannot be undone. This will permanently
-                          delete and remove your data from our servers.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={() => handleDel(item.word)}>
-                          Continue
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
+                  <PostOperations id={item.word} onDelete={handleDel} />
                 </div>
               </div>
               <AccordionContent className="text-sm opacity-50 mb-2">

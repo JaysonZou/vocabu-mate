@@ -1,11 +1,14 @@
-import { Inter } from "next/font/google";
+import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
-import Navtop from "@/component/Navtop";
 import Providers from "@/component/Providers";
 import { Metadata } from "next/types";
-import { getCurrentUser } from "@/lib/session";
+import { cn } from "@/lib/utils";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = FontSans({ subsets: ["latin"] });
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 export const metadata: Metadata = {
   title: "VocabuMate",
@@ -19,7 +22,12 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>

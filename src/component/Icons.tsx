@@ -28,7 +28,6 @@ import {
   CheckIcon,
   LucideIcon,
 } from "lucide-react";
-export type Icon = LucideIcon;
 
 export const Icons = {
   Logo: (props: LucideProps) => (
@@ -93,3 +92,4 @@ export const Icons = {
   twitter: Twitter,
   check: Check,
 };
+export type Icon = typeof Icons;
