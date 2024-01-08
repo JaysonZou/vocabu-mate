@@ -21,7 +21,7 @@ export function PostCreateButton({
   async function onClick() {
     setIsLoading(true);
 
-    const response = await fetch("/api/posts", {
+    const response = await fetch("/api/posts/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,6 +33,8 @@ export function PostCreateButton({
 
     setIsLoading(false);
 
+    console.log(response);
+
     if (!response?.ok) {
       return toast.error("Your post was not created. Please try again.");
     }
@@ -41,8 +43,6 @@ export function PostCreateButton({
 
     // This forces a cache invalidation.
     router.refresh();
-
-    router.push(`/editor/${post.id}`);
   }
 
   return (
