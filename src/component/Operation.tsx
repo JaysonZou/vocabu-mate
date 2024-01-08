@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import {
@@ -21,34 +20,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { toast } from "react-hot-toast";
 import { Icons } from "@/component/Icons";
 import { WordData } from "./DisplayedWord";
-import { Button } from "@/components/ui/button";
-import { Pencil } from "lucide-react";
-import WordFormDialog from "./WordFormDialog";
-
-async function deletePost(postId: string) {
-  const response = await fetch(`/api/posts/${postId}`, {
-    method: "DELETE",
-  });
-
-  if (!response?.ok) {
-    toast.error("Something went wrong");
-  }
-
-  return true;
-}
+import WordFormDialog, { RefType } from "./WordFormDialog";
 
 interface OperationsProps {
-  entity: Post | WordData;
+  word: WordData;
   onDelete: (id: string) => Promise<boolean>;
 }
 
-export function PostOperations({ entity, onDelete }: OperationsProps) {
+export function Operations({ word, onDelete }: OperationsProps) {
   const router = useRouter();
   const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false);
   const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false);
+  const modifyRef = React.useRef<RefType>(null);
 
   return (
     <>
@@ -58,15 +43,12 @@ export function PostOperations({ entity, onDelete }: OperationsProps) {
           <span className="sr-only">Open</span>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          {/* <Link href={`/editor/${entity.id}`} className="flex w-full">
-              Edit
-            </Link> */}
-          {/* 编辑 */}
-          <WordFormDialog
-            mode="modify"
-            trigger={<DropdownMenuItem>Edit</DropdownMenuItem>}
-            initData={entity as WordData}
-          ></WordFormDialog>
+          <DropdownMenuItem
+            className="flex cursor-pointer items-center"
+            onClick={() => modifyRef.current?.openDraw()}
+          >
+            Edit
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             className="flex cursor-pointer items-center text-destructive focus:text-destructive"
@@ -80,7 +62,7 @@ export function PostOperations({ entity, onDelete }: OperationsProps) {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Are you sure you want to delete this post?
+              Are you sure you want to delete this word?
             </AlertDialogTitle>
             <AlertDialogDescription>
               This action cannot be undone.
@@ -93,7 +75,7 @@ export function PostOperations({ entity, onDelete }: OperationsProps) {
                 event.preventDefault();
                 setIsDeleteLoading(true);
 
-                const deleted = await onDelete(id);
+                const deleted = await onDelete(word.word);
 
                 if (deleted) {
                   setIsDeleteLoading(false);
@@ -113,6 +95,10 @@ export function PostOperations({ entity, onDelete }: OperationsProps) {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      <WordFormDialog
+        ref={modifyRef}
+        initData={word as WordData}
+      ></WordFormDialog>
     </>
   );
 }

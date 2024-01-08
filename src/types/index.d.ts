@@ -9,5 +9,5 @@ interface Post {
   authorId: string;
   content: string;
   title: string;
-  published: string;
+  published: boolean;
 }

@@ -35,7 +35,7 @@ import WordFormDialog from "./WordFormDialog";
 import { Button } from "@/components/ui/button";
 import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { PostOperations } from "./Operation";
+import { Operations } from "./Operation";
 import { cn } from "@/lib/utils";
 
 interface ListProps {
@@ -102,7 +102,7 @@ export const List: React.FC<ListProps> = ({ listData }) => {
   return (
     <div
       className={cn(
-        "flex min-h-[400px] flex-col items-center justify-center rounded-md border border-dashed text-center animate-in fade-in-50"
+        "flex min-h-[400px] flex-col items-start justify-start rounded-md border border-dashed text-center animate-in fade-in-50 px-3 py-2"
       )}
     >
       <div className="flex items-center border rounded-md py-1 w-full">
@@ -133,10 +133,10 @@ export const List: React.FC<ListProps> = ({ listData }) => {
                   />
                 </span>
                 <div className=" flex gap-2">
-                  <PostOperations id={item.word} onDelete={handleDel} />
+                  <Operations word={item} onDelete={handleDel} />
                 </div>
               </div>
-              <AccordionContent className="text-sm opacity-50 mb-2">
+              <AccordionContent className="text-sm opacity-50 mb-2 text-left">
                 {item.comment}
                 <div>{item.sentence}</div>
               </AccordionContent>

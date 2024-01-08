@@ -2,16 +2,12 @@
 import { defaultValueCtx, Editor, rootCtx } from "@milkdown/core";
 import type { FC } from "react";
 
-import { Milkdown, MilkdownProvider, useEditor } from "@milkdown/react";
-import {
-  commonmark,
-  paragraphAttr,
-  headingAttr,
-} from "@milkdown/preset-commonmark";
+import { Milkdown, useEditor } from "@milkdown/react";
+import { commonmark } from "@milkdown/preset-commonmark";
 import { nord } from "@milkdown/theme-nord";
-import { history } from "@milkdown/plugin-history";
 
 import "@milkdown/theme-nord/style.css";
+
 const markdown = `# Milkdown Next Commonmark
 
 > You're scared of a world where you're needed.
@@ -24,20 +20,10 @@ export const MilkdownEditor: FC = () => {
       .config((ctx) => {
         ctx.set(rootCtx, root);
         ctx.set(defaultValueCtx, markdown);
-        ctx.set(paragraphAttr.key, () => ({ class: "text-lg" }));
       })
       .config(nord)
-      .use(commonmark)
-      .use(history);
+      .use(commonmark);
   }, []);
 
   return <Milkdown />;
-};
-
-export const MilkEditor: FC = () => {
-  return (
-    <MilkdownProvider>
-      <MilkdownEditor />
-    </MilkdownProvider>
-  );
 };

@@ -26,7 +26,7 @@ import {
   UserPlus,
   Presentation,
   CheckIcon,
-  LucideIcon,
+  CaseSensitive,
 } from "lucide-react";
 
 export const Icons = {
@@ -38,6 +38,7 @@ export const Icons = {
       />
     </svg>
   ),
+  CaseSensitive,
   UserPlus,
   Presentation,
   CheckIcon,
@@ -68,6 +69,7 @@ export const Icons = {
       ></path>
     </svg>
   ),
+  letter: CaseSensitive,
   logo: Command,
   close: X,
   spinner: Loader2,

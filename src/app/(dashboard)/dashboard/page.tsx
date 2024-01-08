@@ -39,8 +39,8 @@ export default async function DashboardPage() {
   return (
     <DashboardShell>
       <DashboardHeader
-        heading="Posts"
-        text="Create and manage posts."
+        heading="Words"
+        text="Create and manage words."
       ></DashboardHeader>
       {listData?.length ? <List listData={listData} /> : <></>}
     </DashboardShell>

@@ -26,16 +26,16 @@ export const dashboardConfig = {
     {
       title: "Words",
       href: "/dashboard",
-      icon: "post",
+      icon: "letter",
     },
     {
       title: "Posts",
       href: "/dashboard/posts",
-      icon: "billing",
+      icon: "post",
     },
     {
-      title: "Review",
-      href: "/dashboard/review",
+      title: "Settings",
+      href: "/dashboard/",
       icon: "settings",
     },
   ],

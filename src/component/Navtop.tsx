@@ -41,19 +41,13 @@ interface NavtopProps {
 const Navtop: React.FC<NavtopProps> = ({ user, items }) => {
   const [sheetType, setSheetType] = useState("");
   return (
-    <div className="fixed left-0 top-0 h-16 border-b px-44 flex justify-between w-full">
+    <div className="fixed left-0 top-0 h-16 px-44 flex justify-between w-full">
       <Sheet>
         <div className="flex items-center gap-4">
           <div className="flex items-center">
             <Image src="/logo.png" alt="logo" width={20} height={20} />
             <div className="ml-2">VocabuMate</div>
           </div>
-          <Link href="/mywords" className="hover:underline">
-            Words
-          </Link>
-          <Link href="/review" className="hover:underline ">
-            Review
-          </Link>
           <SheetTrigger onClick={() => setSheetType("trans")}>
             Translate
           </SheetTrigger>
@@ -77,8 +71,6 @@ const Navtop: React.FC<NavtopProps> = ({ user, items }) => {
             <DropdownMenuContent>
               <DropdownMenuItem>Profile</DropdownMenuItem>
               <DropdownMenuItem>Billing</DropdownMenuItem>
-              <DropdownMenuItem>Team</DropdownMenuItem>
-              <DropdownMenuItem>Subscription</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

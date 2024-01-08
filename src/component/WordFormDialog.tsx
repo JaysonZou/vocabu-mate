@@ -25,19 +25,25 @@ import AddNewWord from "./AddNewWord";
 import { WordData } from "./DisplayedWord";
 
 interface FormProps {
-  trigger: React.ReactNode;
-  mode: "add" | "modify";
   initData: WordData;
 }
-export default function DrawerDialogDemo({ trigger, initData }: FormProps) {
+
+export interface RefType {
+  openDraw: () => void;
+}
+
+function DrawerDialog({ initData }: FormProps, ref: React.Ref<RefType>) {
   const [open, setOpen] = React.useState(false);
   // const isDesktop = useMediaQuery("(min-width: 768px)");
   const isDesktop = true;
 
+  React.useImperativeHandle(ref, () => ({ openDraw }));
+
+  const openDraw = () => setOpen(true);
+
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>{trigger}</DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Edit word</DialogTitle>
@@ -53,7 +59,6 @@ export default function DrawerDialogDemo({ trigger, initData }: FormProps) {
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>{trigger}</DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
           <DrawerTitle>Edit profile</DrawerTitle>
@@ -73,3 +78,4 @@ export default function DrawerDialogDemo({ trigger, initData }: FormProps) {
     </Drawer>
   );
 }
+export default React.forwardRef(DrawerDialog);
