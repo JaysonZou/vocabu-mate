@@ -36,19 +36,20 @@ export const authOptions: NextAuthOptions = {
       clientId: getGoogleCredentials().clientId,
       clientSecret: getGoogleCredentials().clientSecret,
     }),
-    // EmailProvider({
-    //   from: process.env.SMTP_FROM,
-    //   sendVerificationRequest: async ({ identifier, url, provider }) => {
-    //     // const user = await db.user.findUnique({
-    //     //   where: {
-    //     //     email: identifier,
-    //     //   },
-    //     //   select: {
-    //     //     emailVerified: true,
-    //     //   },
-    //     // });
-    //   },
-    // }),
+    EmailProvider({
+      server: process.env.EMAIL_SERVER,
+      from: process.env.EMAIL_FROM,
+      sendVerificationRequest: async ({ identifier, url, provider }) => {
+        // const user = await db.user.findUnique({
+        //   where: {
+        //     email: identifier,
+        //   },
+        //   select: {
+        //     emailVerified: true,
+        //   },
+        // });
+      },
+    }),
   ],
   callbacks: {
     async jwt({ token, user }) {
@@ -87,7 +88,7 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     redirect() {
-      return "/mywords";
+      return "/dashboard";
     },
   },
 };

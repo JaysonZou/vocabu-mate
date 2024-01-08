@@ -6,15 +6,26 @@ import { useFormik } from "formik";
 import { toast } from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useSearchParams } from "next/navigation";
 
 const Login = () => {
+  const searchParams = useSearchParams();
   const formik = useFormik({
     initialValues: {
-      word: "",
-      comment: "",
-      sentence: "",
+      email: "",
     },
-    onSubmit: (values, { setSubmitting }) => {
+    onSubmit: async (values, { setSubmitting }) => {
+      const signInResult = await signIn("email", {
+        email: values.email.toLowerCase(),
+        redirect: false,
+        callbackUrl: searchParams?.get("from") || "/dashboard",
+      });
+
+      setSubmitting(true);
+
+      if (!signInResult?.ok) {
+        return toast.error("Something went wrong.");
+      }
       setSubmitting(false);
       formik.resetForm();
     },
@@ -48,9 +59,11 @@ const Login = () => {
           <div className="mt-6 flex flex-col gap-4">
             <Input
               type="email"
+              name="email"
+              id="email"
               placeholder="you@example.com"
               onChange={formik.handleChange}
-              value={formik.values.comment}
+              value={formik.values.email}
             />
             <Button type={"submit"}>Sign In with Email</Button>
           </div>
