@@ -7,7 +7,6 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const postId = body.id;
-    const postContent = body.content;
 
     const session = await getServerSession(authOptions);
 
@@ -15,12 +14,13 @@ export async function POST(req: Request) {
       return new Response("Unauthorized", { status: 401 });
     }
 
-    await db.hset(`post:${session.user.id}:${postId}`, {
-      id: postId,
-      content: postContent,
-    });
+    const response: string | null = await db.hget(
+      `post:${session.user.id}:${postId}`,
+      "content"
+    );
+    console.log(response);
 
-    return new Response("OK");
+    return new Response(response);
   } catch (error) {
     console.log(error, "error");
     if (error instanceof z.ZodError) {

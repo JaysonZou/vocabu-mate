@@ -1,11 +1,43 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { MilkdownEditor } from "./Editor";
-import { useState, useEffect } from "react";
+import MilkdownEditor, { EditorRefType } from "./Editor";
+import { useState, useEffect, useRef } from "react";
 import { MilkdownProvider } from "@milkdown/react";
+import Link from "next/link";
 
 export default function PostArea({ data }: { data: Post[] }) {
   const [isClient, setIsClient] = useState(false);
+  const [currentPost, setCurrentPost] = useState<Post>(data[0]);
+  const [currentPostContent, setCurrentPostContent] = useState("");
+  const editorRef = useRef<EditorRefType>(null);
+
+  const handleEditorSave = async (content: string) => {
+    await fetch("/api/posts/update", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: currentPost.id,
+        content,
+      }),
+    });
+  };
+
+  const getEditorContent = async (id: string) => {
+    const response = await fetch("/api/posts/find", {
+      method: "POST",
+      body: JSON.stringify({ id }),
+    });
+
+    const data = await response.text();
+    console.log("data =>>>", data);
+    editorRef.current?.setValue(data);
+    // setCurrentPostContent(await response.text());
+  };
+  useEffect(() => {
+    getEditorContent(currentPost.id);
+  }, [currentPost]);
 
   // Wait until after client-side hydration to show
   useEffect(() => {
@@ -13,24 +45,28 @@ export default function PostArea({ data }: { data: Post[] }) {
   }, []);
   return (
     <div className="flex gap-4 min-h-[400px]">
-      <nav className="grid items-start gap-2 border-r min-w-[160px]">
+      <nav className="flex flex-col items-start gap-2 border-r min-w-[160px]">
         {data.map((item) => {
           return (
             item.title && (
-              <span
+              <a
+                key={item.id}
                 className={cn(
-                  "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+                  `w-full flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground hover:cursor-pointer ${
+                    item.id === currentPost.id ? "bg-accent" : ""
+                  }`
                 )}
+                onClick={() => setCurrentPost(item)}
               >
                 <span>{item.title}</span>
-              </span>
+              </a>
             )
           );
         })}
       </nav>
       {isClient && (
         <MilkdownProvider>
-          <MilkdownEditor />
+          <MilkdownEditor ref={editorRef} handleSave={handleEditorSave} />
         </MilkdownProvider>
       )}
     </div>

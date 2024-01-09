@@ -11,6 +11,8 @@ export default async function Posts() {
   const user = await getCurrentUser();
 
   const posts = await fetchRedis("smembers", `posts:${user!.id}`);
+  console.log(posts, "====> posts");
+
   const postsData = posts.map((p: any) => ({
     id: p.split("&&")[0],
     title: p.split("&&")[1],
@@ -18,7 +20,9 @@ export default async function Posts() {
   return (
     <div>
       <DashboardShell>
-        <DashboardHeader heading="Posts" text="Create and manage posts." />
+        <DashboardHeader heading="Posts" text="Create and manage posts.">
+          <PostCreateButton />
+        </DashboardHeader>
         <div className="grid gap-8">
           {posts?.length ? (
             <PostArea data={postsData} />

@@ -28,12 +28,11 @@ export function PostCreateButton({
       },
       body: JSON.stringify({
         title: "Untitled Post",
+        content: "to wirte something...",
       }),
     });
 
     setIsLoading(false);
-
-    console.log(response);
 
     if (!response?.ok) {
       return toast.error("Your post was not created. Please try again.");
