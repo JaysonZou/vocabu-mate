@@ -65,9 +65,12 @@ export default function PostArea({ data }: { data: Post[] }) {
         })}
       </nav>
       {isClient && (
-        <MilkdownProvider>
-          <MilkdownEditor ref={editorRef} handleSave={handleEditorSave} />
-        </MilkdownProvider>
+        <div id="milkdown-container" className="milkdown flex-1">
+          {/* milkdown 的容器元素 */}
+          <MilkdownProvider>
+            <MilkdownEditor ref={editorRef} handleSave={handleEditorSave} />
+          </MilkdownProvider>
+        </div>
       )}
     </div>
   );
