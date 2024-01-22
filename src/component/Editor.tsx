@@ -13,7 +13,7 @@ import { Milkdown, useEditor } from "@milkdown/react";
 import { commonmark } from "@milkdown/preset-commonmark";
 import { nord } from "@milkdown/theme-nord";
 import useDebouncedCallback from "beautiful-react-hooks/useDebouncedCallback";
-import { insert, replaceAll } from "@milkdown/utils";
+import { insert, replaceAll, getMarkdown } from "@milkdown/utils";
 
 import "@milkdown/theme-nord/style.css";
 
@@ -26,7 +26,7 @@ export interface EditorProps {
 }
 
 export interface EditorRefType {
-  setValue: (value: string) => void;
+  getValue: () => string;
 }
 
 const MilkdownEditor = (
@@ -72,7 +72,12 @@ const MilkdownEditor = (
       );
     });
   };
-  useImperativeHandle(ref, () => ({ setValue }));
+
+  const getValue = () => {
+    let value = ''
+    get()?.action(getMarkdown)
+  }
+  useImperativeHandle(ref, () => ({ getValue }));
   return <Milkdown />;
 };
 

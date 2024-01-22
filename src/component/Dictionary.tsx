@@ -4,12 +4,25 @@ import { Input } from "@/components/ui/input";
 import { SheetContent, SheetHeader } from "@/components/ui/sheet";
 import { Search } from "lucide-react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 interface DictRes {
   license: string;
-  phonetics: string;
+  phonetics: {
+    text: string;
+    audio: string;
+  }[];
   sourceUrls: string;
   word: string;
+  meanings: {
+    partOfSpeech: string;
+    antonyms: string[];
+    synonyms: string[];
+    definitions: {
+      definition: string;
+      example?: string;
+    }[];
+  }[];
 }
 
 interface NoFound {
@@ -20,15 +33,22 @@ interface NoFound {
 
 export default function Dictionary() {
   const [word, setWord] = useState("");
-  const [res, setRes] = useState<DictRes | NoFound>();
+  const [res, setRes] = useState<DictRes>();
 
   const lookUp = async (word: string) => {
-    const res = await fetch(
-      "https://api.dictionaryapi.dev/api/v2/entries/en/" + word
-    );
+    try {
+      const res = await fetch(
+        "https://api.dictionaryapi.dev/api/v2/entries/en/" + word
+      );
 
-    const data = await res.json();
-    setRes(data);
+      const data: DictRes[] = await res.json();
+      if (data.length) {
+        const explanation = data[0];
+        setRes(explanation);
+      }
+    } catch (error) {
+      toast.error("ops, Something went wrong.");
+    }
   };
   return (
     <>
@@ -44,7 +64,33 @@ export default function Dictionary() {
           <Search />
         </Button>
       </div>
-      <div>{JSON.stringify(res)}</div>
+      <div>
+        <div className="font-bold text-lg">{res?.word}</div>
+        <div>
+          {res?.phonetics.map((item) => {
+            return (
+              <div key={item.text}>
+                {item.text} {item.audio}
+              </div>
+            );
+          })}
+        </div>
+        <div>
+          {res?.meanings.map((item) => {
+            return (
+              <div className="mb-2 mt-2" key={item.partOfSpeech}>
+                <span className=" opacity-50">{item.partOfSpeech}:</span>
+                {item.definitions.map((d) => (
+                  <div key={d.definition}>
+                    Defination:
+                    <span> · {d.definition}</span>
+                  </div>
+                ))}
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </>
   );
 }
