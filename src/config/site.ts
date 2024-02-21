@@ -33,10 +33,5 @@ export const dashboardConfig = {
       href: "/dashboard/posts",
       icon: "post",
     },
-    {
-      title: "Settings",
-      href: "/dashboard/",
-      icon: "settings",
-    },
   ],
 };

@@ -70,7 +70,7 @@ export default function Dictionary() {
           {res?.phonetics.map((item) => {
             return (
               <div key={item.text}>
-                {item.text} {item.audio}
+                {item.text} <audio src={item.audio}>s</audio>
               </div>
             );
           })}
@@ -78,15 +78,14 @@ export default function Dictionary() {
         <div>
           {res?.meanings.map((item) => {
             return (
-              <div className="mb-2 mt-2" key={item.partOfSpeech}>
+              <ul className="mb-2 mt-2" key={item.partOfSpeech}>
                 <span className=" opacity-50">{item.partOfSpeech}:</span>
                 {item.definitions.map((d) => (
-                  <div key={d.definition}>
-                    Defination:
-                    <span> · {d.definition}</span>
-                  </div>
+                  <li className="text-sm list-disc" key={d.definition}>
+                    {d.definition}
+                  </li>
                 ))}
-              </div>
+              </ul>
             );
           })}
         </div>

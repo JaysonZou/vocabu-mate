@@ -17,7 +17,17 @@ export function PostCreateButton({
 }: PostCreateButtonProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  function generateRandomString(): string {
+    const characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let randomString = "";
 
+    for (let i = 0; i < 7; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      randomString += characters.charAt(randomIndex);
+    }
+
+    return randomString;
+  }
   async function onClick() {
     setIsLoading(true);
 
@@ -27,7 +37,7 @@ export function PostCreateButton({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        title: "Untitled Post",
+        title: generateRandomString(),
         content: "to wirte something...",
       }),
     });

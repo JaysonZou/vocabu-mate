@@ -26,7 +26,7 @@ export interface EditorProps {
 }
 
 export interface EditorRefType {
-  getValue: () => string;
+  setValue: (v: string) => void;
 }
 
 const MilkdownEditor = (
@@ -73,11 +73,7 @@ const MilkdownEditor = (
     });
   };
 
-  const getValue = () => {
-    let value = ''
-    get()?.action(getMarkdown)
-  }
-  useImperativeHandle(ref, () => ({ getValue }));
+  useImperativeHandle(ref, () => ({ setValue }));
   return <Milkdown />;
 };
 
